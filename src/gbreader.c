@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
 
 		if ( isValidPath(argv[1]) ){
 
-      if(argv[2][0] == '-') {
+      if(argc > 2 && argv[2][0] == '-') {
         
         if ( strcmp(argv[2],"-h") == 0 || strcmp(argv[2],"-hex") == 0 ){
           just_hex = true;
