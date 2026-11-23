@@ -1,0 +1,26 @@
+# Compiled object files, static/shared libraries, and binaries
+*.o
+*.obj
+*.a
+*.so
+*.out
+*.d
+*.exe
+
+# Build output directories
+gbdasm/build/
+gbreader/build/
+build/
+
+# ROM files and local hex dumps
+roms/
+*.gb
+*.gbc
+*.gba
+tetrishex.txt
+
+# Editor temporary files and OS metadata
+*.swp
+*.swo
+*~
+.DS_Store
