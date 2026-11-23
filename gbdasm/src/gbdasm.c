@@ -69,6 +69,10 @@ int main(int argc, char *argv[]){
   while(!end_flag) {
 
     switch (rom[pc]) {
+      case 0x05:
+        printf("DEC B\n");
+        pc++;
+        break;
       case 0x06:
         printf("LD B,%02X\n", rom[pc + 1]);
         pc++;
@@ -85,8 +89,12 @@ int main(int argc, char *argv[]){
         pc++;
         pc++;
         break;
+      case 0x32:
+        printf("LD (HL-),A\n");
+        pc++;
+        break;
       case 0xAF:
-        printf("XOR A\n");
+        printf("XOR \n");
         pc++;
         break;
       case 0xC3:
