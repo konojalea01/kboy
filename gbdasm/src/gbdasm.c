@@ -84,6 +84,10 @@ int main(int argc, char *argv[]){
         pc++;
         pc++;
         break;
+      case 0x0B:
+	printf("DEC BC\n");
+	pc++;
+	break;
       case 0x0C:
 	printf("INC C\n");
 	pc++;
@@ -99,6 +103,20 @@ int main(int argc, char *argv[]){
         break;
       case 0x0F:
 	printf("RRCA\n");
+	pc++;
+	break;
+      case 0x11:
+	printf("LD DE, $%02X%02X\n", rom[pc + 2], rom[pc + 1]);
+	pc++;
+	pc++;
+	pc++;
+	break;
+      case 0x12:
+	printf("LD (DE), A\n");
+	pc++;
+	break;
+      case 0x13:
+	printf("INC DE\n");
 	pc++;
 	break;
       case 0x20:
@@ -152,6 +170,10 @@ int main(int argc, char *argv[]){
 	printf("LD B, E\n");
 	pc++;
 	break;
+      case 0x78:
+	printf("LD A, B\n");
+	pc++;
+	break;
       case 0x80:
 	printf("ADD A, B\n");
 	pc++;
@@ -164,13 +186,24 @@ int main(int argc, char *argv[]){
         printf("XOR A\n");
         pc++;
         break;
+      case 0xB1:
+	printf("OR A, C\n");
+	pc++;
+	break;
       case 0xC3:
         printf("JMP $%02X%02X\n",rom[pc + 2], rom[pc + 1]);
         pc = ((uint16_t)rom[pc + 2] << 8) | (uint16_t)rom[pc + 1];
         break;
+      case 0xC9:
+	printf("RET\n");
+	pc++;
+	break;
       case 0xCD:
-	printf("CALL %02X%02X\n", rom[pc + 2], rom[pc + 1]);
-	pc = ((uint16_t)rom[pc + 2] << 8) | (uint16_t)rom[pc + 1];
+	printf("CALL $%02X%02X\n", rom[pc + 2], rom[pc + 1]);
+	pc++;
+	pc++;
+	pc++;
+	//pc = ((uint16_t)rom[pc + 2] << 8) | (uint16_t)rom[pc + 1];
 	break;
       case 0xE0:
 	printf("LDH $%02X, A\n", rom[pc + 1]);
@@ -179,6 +212,11 @@ int main(int argc, char *argv[]){
 	break;
       case 0xE2:
 	printf("LDH (C), A\n");
+	pc++;
+	break;
+      case 0xE6:
+	printf("AND A, %02X\n", rom[pc + 1]);
+	pc++;
 	pc++;
 	break;
       case 0xEA:
@@ -194,6 +232,10 @@ int main(int argc, char *argv[]){
 	break;
       case 0xF3:
 	printf("DI\n");
+	pc++;
+	break;
+      case 0xFB:
+	printf("EI\n");
 	pc++;
 	break;
       case 0xFE:
