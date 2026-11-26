@@ -67,42 +67,146 @@ int main(int argc, char *argv[]){
   long int pc = 0;
   
   while(!end_flag) {
-
+    printf("PC : %04lX\t", pc); 
     switch (rom[pc]) {
+      case 0x01:
+	printf("LD BC, $%02X%02X\n", rom[pc + 2], rom[pc + 1]);
+	pc++;
+	pc++;
+	pc++;
+	break;
       case 0x05:
         printf("DEC B\n");
         pc++;
         break;
       case 0x06:
-        printf("LD B,%02X\n", rom[pc + 1]);
+        printf("LD B, $%02X\n", rom[pc + 1]);
         pc++;
         pc++;
         break;
+      case 0x0C:
+	printf("INC C\n");
+	pc++;
+	break;
+      case 0x0D:
+	printf("DEC C\n");
+	pc++;
+	break;
       case 0x0E:
-        printf("LD C,%02X\n", rom[pc + 1]);
+        printf("LD C, $%02X\n", rom[pc + 1]);
         pc++;
         pc++;
         break;
+      case 0x0F:
+	printf("RRCA\n");
+	pc++;
+	break;
+      case 0x20:
+	printf("JR NZ, $%02X\n", rom[pc + 1]);
+	pc++;
+	pc++;
+	break;
       case 0x21:
-        printf("LD HL,%02X%02X\n", rom[pc+2], rom[pc+1]);
+        printf("LD HL, $%02X%02X\n", rom[pc + 2], rom[pc + 1]);
         pc++;
         pc++;
         pc++;
         break;
+      case 0x2A:
+	printf("LD A, (HL+)\n");
+	pc++;
+	break;
+      case 0x31:
+	printf("LD SP, $%02X%02X\n", rom[pc + 2], rom[pc + 1]);
+	pc++;
+	pc++;
+	pc++;
+	break;
       case 0x32:
         printf("LD (HL-),A\n");
         pc++;
         break;
+      case 0x36:
+	printf("LD (HL), $%02X\n", rom[pc + 1]);
+	pc++;
+	pc++;
+	break;
+      case 0x3E:
+	printf("LD A, $%02X\n", rom[pc + 1]);
+	pc++;
+	pc++;
+	break;
+      case 0x40:
+	printf("LD B, B\n");
+	pc++;
+	break;
+      case 0x41:
+	printf("LD B, C\n");
+	pc++;
+	break;
+      case 0x42:
+	printf("LD B, D\n");
+	pc++;
+	break;
+      case 0x43:
+	printf("LD B, E\n");
+	pc++;
+	break;
+      case 0x80:
+	printf("ADD A, B\n");
+	pc++;
+	break;
+      case 0xA4:
+	printf("AND A, H\n");
+	pc++;
+	break;
       case 0xAF:
-        printf("XOR \n");
+        printf("XOR A\n");
         pc++;
         break;
       case 0xC3:
-        printf("JMP %02X%02X\n",rom[pc + 2], rom[pc + 1]);
+        printf("JMP $%02X%02X\n",rom[pc + 2], rom[pc + 1]);
         pc = ((uint16_t)rom[pc + 2] << 8) | (uint16_t)rom[pc + 1];
         break;
+      case 0xCD:
+	printf("CALL %02X%02X\n", rom[pc + 2], rom[pc + 1]);
+	pc = ((uint16_t)rom[pc + 2] << 8) | (uint16_t)rom[pc + 1];
+	break;
+      case 0xE0:
+	printf("LDH $%02X, A\n", rom[pc + 1]);
+	pc++;
+	pc++;
+	break;
+      case 0xE2:
+	printf("LDH (C), A\n");
+	pc++;
+	break;
+      case 0xEA:
+	printf("LD ($%02X%02X), A\n", rom[pc + 2], rom[pc + 1]);
+	pc++;
+	pc++;
+	pc++;
+	break;
+      case 0xF0:
+	printf("LDH A, $%02X\n", rom[pc + 1]);
+	pc++;
+	pc++;
+	break;
+      case 0xF3:
+	printf("DI\n");
+	pc++;
+	break;
+      case 0xFE:
+	printf("CP A, $%02X\n", rom[pc + 1]);
+	pc++;
+	pc++;
+	break;
+      case 0xFF:
+	printf("RST 38\n");
+	pc++;
+	break;
       default:
-        printf("%02X opcode not mapped\n", rom[pc]);
+        printf("$%02X opcode not mapped\n", rom[pc]);
         end_flag = true;
         break;
 
