@@ -67,7 +67,7 @@ int main(int argc, char *argv[]){
   long int pc = 0;
   
   while(!end_flag) {
-    printf("PC : %04lX\t", pc); 
+    printf("PC : %04lX\tHEX : %02X\t", pc, rom[pc]); 
     switch (rom[pc]) {
       case 0x01:
 	printf("LD BC, $%02X%02X\n", rom[pc + 2], rom[pc + 1]);
@@ -130,8 +130,17 @@ int main(int argc, char *argv[]){
         pc++;
         pc++;
         break;
+      case 0x28:
+	printf("JR Z, %02X\n", rom[pc + 1]);
+	pc++;
+	pc++;
+	break;
       case 0x2A:
 	printf("LD A, (HL+)\n");
+	pc++;
+	break;
+      case 0x2C:
+	printf("INC L\n");
 	pc++;
 	break;
       case 0x31:
@@ -144,6 +153,10 @@ int main(int argc, char *argv[]){
         printf("LD (HL-),A\n");
         pc++;
         break;
+      case 0x35:
+	printf("DEC (HL)\n");
+	pc++;
+	break;
       case 0x36:
 	printf("LD (HL), $%02X\n", rom[pc + 1]);
 	pc++;
@@ -174,12 +187,20 @@ int main(int argc, char *argv[]){
 	printf("LD A, B\n");
 	pc++;
 	break;
+      case 0x7E:
+	printf("LD A, (HL)\n");
+	pc++;
+	break;
       case 0x80:
 	printf("ADD A, B\n");
 	pc++;
 	break;
       case 0xA4:
 	printf("AND A, H\n");
+	pc++;
+	break;
+      case 0xA7:
+	printf("AND A, A\n");
 	pc++;
 	break;
       case 0xAF:
@@ -196,6 +217,12 @@ int main(int argc, char *argv[]){
         break;
       case 0xC9:
 	printf("RET\n");
+	pc++;
+	break;
+      case 0xCA:
+	printf("JP Z, $%02X%02X\n", rom[pc + 2], rom[pc + 1]);
+	pc++;
+	pc++;
 	pc++;
 	break;
       case 0xCD:
